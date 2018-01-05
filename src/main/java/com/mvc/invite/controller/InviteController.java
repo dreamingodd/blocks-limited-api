@@ -36,6 +36,7 @@ public class InviteController {
 
     static final long SMS_TPL_ORDER_CONFIRM = 2098620L;
     static final long SMS_TPL_ORDER_FAIL = 2098640L;
+    static final long SMS_MACAO_FORUM = 2137178L;
 
     @Value("${price}")
     private Integer price;
@@ -236,6 +237,28 @@ public class InviteController {
         String smsResult = YupianJavaSmsApi.tplSendSms("0f937830e9c16699dc4d08b78aa8c5b3", SMS_TPL_ORDER_FAIL, tplValue, ksOrder.getCellphone());
         log.info(smsResult);
         return responseGenerator.success(result);
+    }
+
+    @ApiOperation(value = "澳门纷智峰会门票", notes = "一次性功能")
+    @PostMapping("/sms/macao-forum")
+    public String smsForMacaoForum(
+            @RequestParam String password) throws IOException, NoSuchAlgorithmException {
+        if (!inviteService.md5(authEmp).equals(password.toUpperCase())) {
+            return responseGenerator.fail("密码错误！");
+        }
+        List<KsOrder> ksOrders = ksOrderMapper.selectKsOrders();
+        List<String> smsResults = new ArrayList<>();
+        for (KsOrder ksOrder : ksOrders) {
+            if (KsOrder.STATUS_CONFIRMED == ksOrder.getStatus()) {
+                String tplValue = URLEncoder.encode("#name#", ENCODING) + "=" +
+                        URLEncoder.encode(ksOrder.getName());
+                String smsResult = YupianJavaSmsApi.tplSendSms("0f937830e9c16699dc4d08b78aa8c5b3",
+                        SMS_MACAO_FORUM, tplValue, ksOrder.getCellphone());
+                smsResults.add(smsResult);
+            }
+        }
+        log.info(smsResults.toString());
+        return responseGenerator.success(smsResults);
     }
 
 

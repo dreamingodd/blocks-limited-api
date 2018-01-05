@@ -22,6 +22,9 @@ public interface KsOrderMapper extends BaseMapper<KsOrder> {
     @Select("select * from ks_order where status <> 0 order by created_at desc")
     List<KsOrder> selectKsOrders();
 
+    @Select("select * from ks_order where status = 2 order by created_at desc")
+    List<KsOrder> selectKsVerifiedOrders();
+
     @Select("select * from ks_order where status <> 0 and cellphone like CONCAT(#{searchText},'%') or name like CONCAT(#{searchText},'%') order by created_at desc")
     List<KsOrder> selectKsOrdersBySearchText(@Param("searchText") String searchText);
 
