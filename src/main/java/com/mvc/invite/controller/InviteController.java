@@ -36,7 +36,7 @@ public class InviteController {
 
     static final long SMS_TPL_ORDER_CONFIRM = 2098620L;
     static final long SMS_TPL_ORDER_FAIL = 2098640L;
-    static final long SMS_MACAO_FORUM = 2137178L;
+    static final long SMS_MACAO_FORUM = 2145500L;
 
     @Value("${price}")
     private Integer price;
@@ -253,7 +253,7 @@ public class InviteController {
                 String tplValue = URLEncoder.encode("#name#", ENCODING) + "=" +
                         URLEncoder.encode(ksOrder.getName());
                 String smsResult = YupianJavaSmsApi.tplSendSms("0f937830e9c16699dc4d08b78aa8c5b3",
-                        SMS_MACAO_FORUM, tplValue, ksOrder.getCellphone());
+                        SMS_MACAO_FORUM, null, ksOrder.getCellphone());
                 smsResults.add(smsResult);
             }
         }
