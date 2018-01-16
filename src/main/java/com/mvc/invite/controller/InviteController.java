@@ -36,7 +36,7 @@ public class InviteController {
 
     static final long SMS_TPL_ORDER_CONFIRM = 2098620L;
     static final long SMS_TPL_ORDER_FAIL = 2098640L;
-    static final long SMS_MACAO_FORUM = 2145500L;
+    static final long SMS_MACAO_FORUM = 2152452L;
 
     @Value("${price}")
     private Integer price;
